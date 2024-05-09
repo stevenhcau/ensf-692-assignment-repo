@@ -1,4 +1,9 @@
 ## 📝 ENSF 692 - Assignment 1 Tasks
+
+Steven (Han) Au
+
+Quote: "If you know others and know yourself, you will not be imperiled in a hundred battles; if you do not know others but know yourself, you win one and lose one; if you do not know others and do not know yourself, you will be imperiled in every single battle." - Sun Tzu
+
 * Open VSCode and start a new terminal. 
 * Edit this `README` file to add your first and last name, and your favourite inspirational quote.
 * Edit the `assignment1code.py` file by following the instructions in the comments.
