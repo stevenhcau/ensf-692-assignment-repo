@@ -80,7 +80,6 @@ def print_message(sensor):
           " , Vehicle = " + sensor.vehicleStatus + "\n")
 
 
-# Complete the main function below
 def main():
     sensorClass = Sensor()
     print("\n***ENSF 692 Car Vision Detector Processing Program***\n")
