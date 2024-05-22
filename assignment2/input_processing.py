@@ -11,6 +11,7 @@ class Sensor:
         self.programStatus = True
 
     # Updates the vision input status
+    # has logic for exiting the program, and additionally calls other class methods in order to update the correct value
     def update_status(self):
         print("Are changes detected in the vision input?")
 
@@ -83,6 +84,8 @@ def print_message(sensor):
 def main():
     sensorClass = Sensor()
     print("\n***ENSF 692 Car Vision Detector Processing Program***\n")
+
+    # while true, update status
     while sensorClass.programStatus:
         sensorClass.update_status()
 
