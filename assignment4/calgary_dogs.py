@@ -19,14 +19,15 @@ def main():
     df_ind = df.set_index(['Breed', 'Year', 'Month']) 
     df_ind.sort_index()
 
-    def getDogData(df, dogName):
+    def get_dog_data(df, dogName):
         return df.loc[[dogName]]
     
-    def getTotalByBreed(df, dogName):
+    def get_sum_by_breed(df, dogName):
         df = df.loc[[dogName]].reset_index()
         return df['Total'].sum()
     
-    def getTopBreedStat(df, dogName, year):
+    #TODO: improve naming of get_percent_of_breed_year()
+    def get_percent_of_breed_year(df, dogName, year):
         df = df.groupby(level = ['Breed','Year'])['Total'].sum().reset_index(name = 'Total Licenses')
         df = df[df['Year'] == year]
         totalLicenses = df['Total Licenses'].sum()
@@ -37,7 +38,7 @@ def main():
         return df['Percent of Total'].loc[df.index[0]]
     
 
-    print(getTopBreedStat(df_ind, 'AIREDALE TERR', 2021))
+    print(get_percent_of_breed_year(df_ind, 'AIREDALE TERR', 2021))
     # print(df['Breed'].unique())
 
 
