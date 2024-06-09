@@ -14,7 +14,7 @@ def main():
 
     # Import data here
 
-    df = pd.read_excel('assignment4\CalgaryDogBreeds.xlsx')
+    df = pd.read_excel(r"assignment4\CalgaryDogBreeds.xlsx")
     breedsArray = df['Breed'].unique()
     df_ind = df.set_index(['Breed', 'Year', 'Month']) 
     df_ind.sort_index()
@@ -26,19 +26,18 @@ def main():
         df = df.loc[[dogName]].reset_index()
         return df['Total'].sum()
     
-    def getTopBreedStat(df, year):
+    def getTopBreedStat(df, dogName, year):
         df = df.groupby(level = ['Breed','Year'])['Total'].sum().reset_index(name = 'Total Licenses')
         df = df[df['Year'] == year]
         totalLicenses = df['Total Licenses'].sum()
         df['Percent of Total'] = df.apply(lambda x: x['Total Licenses']/totalLicenses * 100, axis = 1)
-        
-        print(totalLicenses)
+        df = df.reset_index(drop = True)
+        df = df[df['Breed'] == dogName]
 
-
-        return df
+        return df['Percent of Total'].loc[df.index[0]]
     
 
-    print(getTopBreedStat(df_ind, 2021))
+    print(getTopBreedStat(df_ind, 'AIREDALE TERR', 2021))
     # print(df['Breed'].unique())
 
 
