@@ -9,14 +9,37 @@ import pandas as pd
 # You may import any modules from the standard Python library.
 # Remember to include docstrings and comments.
 
+
 def main():
 
     # Import data here
 
     df = pd.read_excel('assignment4\CalgaryDogBreeds.xlsx')
     breedsArray = df['Breed'].unique()
+    df_ind = df.set_index(['Breed', 'Year', 'Month']) 
+    df_ind.sort_index()
 
-    print(df.head(10))
+    def getDogData(df, dogName):
+        return df.loc[[dogName]]
+    
+    def getTotalByBreed(df, dogName):
+        df = df.loc[[dogName]].reset_index()
+        return df['Total'].sum()
+    
+    def getTopBreedStat(df, year):
+        df = df.groupby(level = ['Breed','Year'])['Total'].sum().reset_index(name = 'Total Licenses')
+        df = df[df['Year'] == year]
+        totalLicenses = df['Total Licenses'].sum()
+        df['Percent of Total'] = df.apply(lambda x: x['Total Licenses']/totalLicenses * 100, axis = 1)
+        
+        print(totalLicenses)
+
+
+        return df
+    
+
+    print(getTopBreedStat(df_ind, 2021))
+    # print(df['Breed'].unique())
 
 
     print("ENSF 692 Dogs of Calgary")
