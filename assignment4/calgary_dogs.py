@@ -22,11 +22,10 @@ def main():
     def get_dog_data(df, dogName):
         return df.loc[[dogName]]
     
-    def get_sum_by_breed(df, dogName):
+    def get_sum_of_licenses_by_breed(df, dogName):
         df = df.loc[[dogName]].reset_index()
         return df['Total'].sum()
     
-    #TODO: improve naming of get_percent_of_breed_year()
     def get_percent_of_breed_year(df, dogName, year):
         df = df.groupby(level = ['Breed','Year'])['Total'].sum().reset_index(name = 'Total Licenses')
         df = df[df['Year'] == year]
@@ -34,15 +33,24 @@ def main():
         df['Percent of Total'] = df.apply(lambda x: x['Total Licenses']/totalLicenses * 100, axis = 1)
         df = df.reset_index(drop = True)
         df = df[df['Breed'] == dogName]
-
+        
         return df['Percent of Total'].loc[df.index[0]]
     
+    def print_total_licenses_of_breed(df, dogName):
+        print("There have been", get_sum_of_licenses_by_breed(df_ind, dogName), dogName, "dogs registered in total.")
+    
+    def print_percent_of_breed_year(df, dogName, year):
+        print("The", dogName, "was", "%.6f%%" % get_percent_of_breed_year(df_ind, dogName, year),"of top breeds in", year)
 
-    print(get_percent_of_breed_year(df_ind, 'AIREDALE TERR', 2021))
+    print("ENSF 692 Dogs of Calgary")
+    print_total_licenses_of_breed(df, 'LABRADOR RETR')
+    print_percent_of_breed_year(df_ind, 'LABRADOR RETR', 2021)
+    print_percent_of_breed_year(df_ind, 'LABRADOR RETR', 2022)
+    print_percent_of_breed_year(df_ind, 'LABRADOR RETR', 2023)
     # print(df['Breed'].unique())
 
 
-    print("ENSF 692 Dogs of Calgary")
+    
 
     # User input stage
 
