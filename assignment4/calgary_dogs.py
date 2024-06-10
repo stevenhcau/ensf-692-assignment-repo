@@ -78,29 +78,27 @@ def main():
         print_percent_of_breed_year(df, dogName, 2021)
         print_percent_of_breed_year(df, dogName, 2022)
         print_percent_of_breed_year(df, dogName, 2023)
-        print_top_months_of_breeds(df, dogName)
         print_total_percent_of_breed_licenses(df_ind, dogName)
+        print_top_months_of_breeds(df, dogName)
+        print("")
 
-    def check_input(input):
-        input = str.upper(input)
-        if input in breedsArray:
-            return True
+    def update_status():
+        inp = input("Please enter a dog breed: ")
+        inp = str.upper(inp)
+        if inp in breedsArray:
+            print_breed_stats(df_ind, inp)
+            check_input = False
         else:
-            return False
+            print('Dog breed was not found in the data. Please try again.\n')
 
 
     print("ENSF 692 Dogs of Calgary")
-    print_breed_stats(df_ind, 'LABRADOR RETR')
-    
-
-    # print(df['Breed'].unique())
-
-
-    
 
     # User input stage
+    check_input = True
 
-    # Data anaylsis stage
+    while check_input:
+        update_status()
 
 if __name__ == '__main__':
     main()
