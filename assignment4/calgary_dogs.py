@@ -5,9 +5,6 @@ import pandas as pd
 #
 # A terminal-based application for computing and printing statistics based on given input.
 # Detailed specifications are provided via the Assignment 4 README file.
-# You must include the main listed below. You may add your own additional classes, functions, variables, etc. 
-# You may import any modules from the standard Python library.
-# Remember to include docstrings and comments.
 
 
 def main():
@@ -92,12 +89,13 @@ def main():
         None
             Displays the most popular months over all years for a particular dog breed given a dog breed input in terminal
         """
-        df = df.groupby(level = ['Breed','Month'])['Total'].sum().reset_index(name = 'Total Licenses')
-        df = df[df['Breed'] == dogName]
-        df = df.sort_values(by = 'Total Licenses', ascending = False)
-        months = df['Month'].unique()[:9]
-        months = sorted(months)
-        print('Most popular month(s) for', dogName, 'dogs: ', end ='')
+
+        df = get_dog_data(df, dogName)
+        df = df.groupby('Month').count()
+        df = df[df['Total'] >= 2]
+        df = df.reset_index()
+        months = pd.array(df['Month'])
+        print('Most popular month(s) for', dogName, 'dogs:  ', end ='')
         print(*months, sep = ' ')
     
     def get_percent_of_breed_year(df, dogName, year):
@@ -184,7 +182,7 @@ def main():
         None
             Display total of licenses of a particular breed across all years
         """
-        print("The", dogName, "was", "%.6f%%" % get_percent_of_breed_year(df, dogName, year),"of top breeds in", year, ".")
+        print(f"The {dogName} was {"%.6f%%" % get_percent_of_breed_year(df, dogName, year)} of top breeds in {year}.")
 
     def print_total_percent_of_breed_licenses(df, dogName):
         """
@@ -203,7 +201,6 @@ def main():
             Display percentage of licenses of a particular breed across all years
         """
         print("The", dogName, "was", "%.6f%%" % get_total_percent_of_breed_licenses(df, dogName),"of top breeds across all years.")
-
 
     def print_breed_stats(df, dogName):
         """
