@@ -226,7 +226,6 @@ def main():
         print_percent_of_breed_year(df, dogName, 2023)
         print_total_percent_of_breed_licenses(df_ind, dogName)
         print_top_months_of_breeds(df, dogName)
-        print("")
 
     def update_status():
         """
@@ -238,16 +237,17 @@ def main():
 
         Returns
         -------
-        None
+        Boolean
             Displays statistics for a particular breed
         """
         inp = input("Please enter a dog breed: ")
         inp = str.upper(inp)
         if inp in breedsArray:
             print_breed_stats(df_ind, inp)
-            check_input = False
+            return False
         else:
-            print('Dog breed was not found in the data. Please try again.\n')
+            print('Dog breed was not found in the data. Please try again.')
+            return True
 
 
     print("ENSF 692 Dogs of Calgary")
@@ -256,7 +256,7 @@ def main():
     check_input = True
 
     while check_input:
-        update_status()
+        check_input = update_status()
 
 if __name__ == '__main__':
     main()
